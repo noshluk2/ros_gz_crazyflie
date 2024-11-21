@@ -32,79 +32,49 @@ def generate_launch_description():
     # Setup project paths
     pkg_project_bringup = get_package_share_directory('ros_gz_crazyflie_bringup')
     pkg_project_gazebo = get_package_share_directory('ros_gz_crazyflie_gazebo')
-    pkg_project_description = get_package_share_directory('ros_gz_crazyflie_description')
-    pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
+    pkg_ros_gz_sim = get_package_share_directory('ros_ign_gazebo')
+    gz_model_path = os.getenv('IGN_GAZEBO_RESOURCE_PATH')
+
 
     # Load the SDF file from "description" package
-    sdf_file  =  os.path.join(pkg_project_description, 'models', 'crazyflie', 'model.sdf')
+    sdf_file  =  os.path.join(gz_model_path, 'crazyflie', 'model.sdf')
     with open(sdf_file, 'r') as infp:
         robot_desc = infp.read()
 
     # Setup to launch the simulator and Gazebo world
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
+            os.path.join(pkg_ros_gz_sim, 'launch', 'ign_gazebo.launch.py')),
         launch_arguments={'gz_args': PathJoinSubstitution([
             pkg_project_gazebo,
             'worlds',
-            'crazyflie_world.sdf -r'
+            'house_world.sdf -r'
         ])}.items(),
     )
 
-    # Takes the description and joint angles as inputs and publishes the 3D poses of the robot links
-    robot_state_publisher = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        name='robot_state_publisher',
-        output='both',
-        parameters=[
-            {'use_sim_time': True},
-            {'robot_description': robot_desc},
-        ]
-    )
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
         parameters=[{
             'config_file': os.path.join(pkg_project_bringup, 'config', 'ros_gz_crazyflie_bridge.yaml'),
         }],
-        remappings=[
-            ('/model/crazyflie/pose','/tf'),
-        ],
+
         output='screen'
     )
-
-    simple_mapper = Node(
-        package='ros_gz_crazyflie_simple_mapper',
-        executable='simple_mapper_multiranger',
-        output='screen'
-    )
-
-    wall_following = Node(
-        package='ros_gz_crazyflie_wall_following',
-        executable='wall_following_multiranger',
-        output='screen'
-    )
-
-    # bridge = Node(
-    #     package='ros_gz_bridge',
-    #     executable='parameter_bridge',
-    #     arguments=['lidar@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan',
-    #                '/lidar/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked'],
-    #     output='screen'
-    # )
 
     control = Node(
         package='ros_gz_crazyflie_control',
         executable='control_services',
-        output='screen'
+        output='screen',
+        parameters=[
+            {'hover_height': 0.5},
+            {'robot_prefix': '/crazyflie'},
+            {'incoming_twist_topic': '/cmd_vel'},
+            {'max_ang_z_rate': 0.4},
+        ]
     )
 
     return LaunchDescription([
-        #gz_sim,
-        #bridge,
-        #robot_state_publisher
-        #control,
-        simple_mapper,
-        wall_following
-        ])
+        gz_sim,
+        bridge,
+        control        ])
