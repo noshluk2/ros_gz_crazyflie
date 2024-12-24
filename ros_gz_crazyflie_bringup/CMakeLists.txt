@@ -12,6 +12,12 @@ install(
   DESTINATION share/${PROJECT_NAME}/launch
 )
 
+install(
+  DIRECTORY
+    rviz/
+  DESTINATION share/${PROJECT_NAME}/rviz
+)
+
 # Install project configuration files
 install(
   DIRECTORY

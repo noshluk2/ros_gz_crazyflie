@@ -23,22 +23,29 @@
   gz_type_name: "ignition.msgs.Pose_V"
   direction: GZ_TO_ROS
 
-- ros_topic_name: "/rgbd_camera/image"
-  gz_topic_name: "/rgbd_camera/image"
+- ros_topic_name: "/camera/rgbd/image_raw/image"
+  gz_topic_name: "/camera/rgbd/image_raw/image"
   ros_type_name: "sensor_msgs/msg/Image"
   gz_type_name: "ignition.msgs.Image"
   direction: GZ_TO_ROS
 
-- ros_topic_name: "/rgbd_camera/depth_image"
-  gz_topic_name: "/rgbd_camera/depth_image"
+- ros_topic_name: "/camera/rgbd/image_raw/depth_image"
+  gz_topic_name: "/camera/rgbd/image_raw/depth_image"
   ros_type_name: "sensor_msgs/msg/Image"
   gz_type_name: "ignition.msgs.Image"
   direction: GZ_TO_ROS
 
-- ros_topic_name: "/rgbd_camera/camera_info"
-  gz_topic_name: "/rgbd_camera/camera_info"
-  ros_type_name: "sensor_msgs/msg/Image"
-  gz_type_name: "ignition.msgs.Image"
+- ros_topic_name: "/camera/rgbd/image_raw/camera_info"
+  gz_topic_name: "/camera/rgbd/image_raw/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "ignition.msgs.CameraInfo'"
+  direction: GZ_TO_ROS
+
+
+- ros_topic_name: "/camera/rgbd/image_raw/points"
+  gz_topic_name: "/camera/rgbd/image_raw/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "ignition.msgs.PointCloudPacked"
   direction: GZ_TO_ROS
 
 # - ros_topic_name: "/crazyflie/scan"
