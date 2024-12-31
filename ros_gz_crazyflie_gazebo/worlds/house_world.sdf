@@ -2,23 +2,22 @@
 <sdf version="1.6">
     <world name='default'>
         <plugin
-            filename="gz-sim-physics-system"
-            name="gz::sim::systems::Physics">
+        filename="ignition-gazebo-physics-system"
+        name="gz::sim::systems::Physics">
         </plugin>
         <plugin
-            filename="gz-sim-user-commands-system"
-            name="gz::sim::systems::UserCommands">
+        filename="ignition-gazebo-scene-broadcaster-system"
+        name="gz::sim::systems::SceneBroadcaster">
         </plugin>
         <plugin
-            filename="gz-sim-scene-broadcaster-system"
-            name="gz::sim::systems::SceneBroadcaster">
+        filename="ignition-gazebo-user-commands-system"
+        name="gz::sim::systems::UserCommands">
         </plugin>
-
         <plugin
         filename="ignition-gazebo-sensors-system"
-        name="ignition::gazebo::systems::Sensors">
+        name="gz::sim::systems::Sensors">
         <render_engine>ogre2</render_engine>
-       </plugin>
+        </plugin>
 
         <!-- To add realistic gravity, do: 0.0 0.0 -9.8, otherwise do 0.0 0.0 0.0 -->
         <gravity>0.0 0.0 -9.8</gravity>
@@ -33,8 +32,7 @@
 
         <include>
             <uri>model://crazyflie</uri>
-            <name>crazyflie</name>
-            <pose>1 0 0 0 0 0</pose>
+            <pose>0 0 0 0 0 0</pose>
           </include>
         
         

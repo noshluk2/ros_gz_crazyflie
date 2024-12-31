@@ -5,24 +5,13 @@ project(ros_gz_crazyflie_bringup)
 find_package(ament_cmake REQUIRED)
 find_package(ros_gz_crazyflie_gazebo REQUIRED)
 
-# Install project launch files
 install(
   DIRECTORY
-    launch/
-  DESTINATION share/${PROJECT_NAME}/launch
-)
-
-install(
-  DIRECTORY
-    rviz/
-  DESTINATION share/${PROJECT_NAME}/rviz
-)
-
-# Install project configuration files
-install(
-  DIRECTORY
-    config/
-  DESTINATION share/${PROJECT_NAME}/config
+    rviz
+    launch
+    config
+  DESTINATION
+    share/${PROJECT_NAME}/
 )
 
 if(BUILD_TESTING)

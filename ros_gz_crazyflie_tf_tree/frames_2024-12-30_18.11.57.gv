@@ -1,0 +1,10 @@
+digraph G {
+"odom" -> "crazyflie/body"[label=" Broadcaster: default_authority\nAverage rate: 50.515\nBuffer length: 1.94\nMost recent transform: 18.7\nOldest transform: 16.76\n"];
+"map" -> "odom"[label=" Broadcaster: default_authority\nAverage rate: 53.242\nBuffer length: 1.897\nMost recent transform: 18.797\nOldest transform: 16.9\n"];
+"camera_link" -> "camera_frame_rgb"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"crazyflie/body" -> "camera_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1735564317.0683527"[ shape=plaintext ] ;
+}->"map";
+}
